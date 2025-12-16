@@ -9,9 +9,7 @@ router.post("/users",(req,res)=>{
 })
 
 //Read Users
-router.get("/users",(req,res)=>{
-    res.send("Read Users")
-})
+router.get("/users", controllerUser.readAll)
 
 //Update Users
 router.put("/users",(req,res)=>{
