@@ -2,8 +2,14 @@ const express = require('express')
 const colors = require('@colors/colors')
 const config = require('../config')
 const app = express();
-
 const port = config.PORT
+const userRoutes = require('../../routes/user')
+const pedidosRoutes = require('../../routes/pedidos')
+
+//Middlewares
+app.use('/api', userRoutes)
+app.use('/api', pedidosRoutes)
+
 
 const server = async() => {
     try {
