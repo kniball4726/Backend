@@ -1,9 +1,9 @@
 const express = require('express')
 const colors = require('@colors/colors')
-require('dotenv').config();
-
+const config = require('../config')
 const app = express();
-const port = process.env.PORT || 5000;
+
+const port = config.PORT
 
 const server = async() => {
     try {

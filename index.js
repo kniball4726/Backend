@@ -1,5 +1,5 @@
-const server = require('./src/server/index')
-const data = require('./src/data/mongo')
+const server = require('./src/config/server/index')
+const data = require('./src/config/data/mongo')
 
 console.clear();
 server();
