@@ -4,8 +4,7 @@
   "description": "Backend para la carga de pedidos realizados en el deposito de web supplements ubicado en pasteur 731",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index.js",
-    "dev": "nodemon ./index.js"
+    "start": "nodemon index.js"
   },
   "author": "Gregory Rodriguez",
   "license": "MIT",
@@ -15,7 +14,9 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "mongoose": "^9.0.1"
+    "mongoose": "^9.0.1",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

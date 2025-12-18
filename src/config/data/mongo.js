@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const color = require('@colors/colors')
+require('@colors/colors')
 const config = require('../config')
 
 const db_uri_mongo = config.DB_URI_MONGO
