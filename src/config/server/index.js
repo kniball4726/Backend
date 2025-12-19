@@ -4,8 +4,7 @@ const config = require('../config')
 const app = express();
 const cors = require('cors')
 const port = config.PORT
-const userRoutes = require('../../routes/user')
-const pedidosRoutes = require('../../routes/pedidos')
+const rutas = require('../../routes')
 
 //Middlewares
 app.use(express.json());
@@ -39,11 +38,15 @@ app.get('/probando2',(req,res)=>{
 })
 
 
-app.use('/api', userRoutes)
-app.use('/api', pedidosRoutes)
+app.use('/api', rutas)
 
-
+/**
+ * Iniciar el servidor
+ * @return {Promise} - Promesa que se resuelve cuando el servidor inicia correctamente
+ * @throws {Error} - Error si el servidor no puede iniciarse
+ */
 const server = async() => {
+
     try {
         await app.listen(port, () => 
             console.log("\nServidor corriendo por el puerto:",port.brightGreen))        

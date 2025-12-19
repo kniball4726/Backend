@@ -1,19 +1,25 @@
 const express = require('express');
-const controllerUser = require('../controllers/user')
 const router = express.Router();
+const controllerUser = require('../controllers/user')
 
+//TODO: Definir rutas y vincular con el controlador
 
 //Create user
-router.post("/users",controllerUser.createUser)
+router.post("/",controllerUser.createUser)
 
 //Read Users
-router.get("/users", controllerUser.readAll)
+router.get("/", controllerUser.readAll)
+
+//Read One User
+router.get("/:id",controllerUser.readOne)
 
 //Update Users
-router.put("/users",controllerUser.updateUser)
+router.put("/",controllerUser.updateUser)
 
 //Delete Users
-router.delete("/users",controllerUser.deleteUser)
+router.delete("/",controllerUser.deleteUser)
+
+
 
 
 module.exports = router
