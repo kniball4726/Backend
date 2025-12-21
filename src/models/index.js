@@ -1,13 +1,13 @@
 /**
- * Importar y exportar modelos de la base de datos
+ * Modelo principal de la aplicacion
  * @module models/index
- * @return {Object} - Objetos de los modelos de la base de datos
- * 
+ * @return {Object} - Modelos de la aplicacion 
  */
 
 const models = {
-    User: require('./Users'),
-    Pedido: require('./Pedidos')
-}
+    userModel: require('./nosql/Users'),
+    pedidosModel: require('./nosql/Pedidos'),
+    storageModel: require('./nosql/Storage')
+};
 
-module.exports = models
+module.exports = models;

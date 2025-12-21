@@ -1,3 +1,6 @@
+const validator = require('validator');
+const {pedidosModel} = require('../models');
+
 /**
  * Crear un pedido
  * @param {*} req 
