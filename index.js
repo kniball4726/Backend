@@ -14,3 +14,4 @@ const inicio = () => {
 }
 
 inicio();
+

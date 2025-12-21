@@ -62,7 +62,10 @@ const createUser = (req,res)=>{
  */
 const readAll = (req,res)=>{
     //Recoger datos del body
-    let params = req.body;
+    return res.status(200).json({
+        status: "success",
+        msg: "Listar todos los usuarios"
+    });
 
     //Validar datos
 
