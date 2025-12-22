@@ -4,9 +4,10 @@ const fs = require('fs');
 
 const PATH_ROUTES = __dirname;
 /**
- * Remover la extension de un archivo
+ * 
  * @param {*} fileName 
  * @returns 
+ * 
  */
 
 const removeExtension = (fileName) => {

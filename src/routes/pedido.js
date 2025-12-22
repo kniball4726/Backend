@@ -2,22 +2,48 @@ const express = require('express');
 const controllerPedido = require('../controllers/pedidos')
 const router = express.Router();
 
-//Create Pedido
+/**
+ * Rutas para la gestión de pedidos
+ * POST /api/pedido
+ * body: {pedidoData}
+ * returns pedido creado
+ *
+ */
 router.post("/", controllerPedido.create)
 
-//Read Pedido
+/**
+ * Rutas para la gestión de pedidos
+ * GET /api/pedido
+ * returns lista de pedidos
+ */
 router.get("/", controllerPedido.readAll)
 
-//Read One Pedido
+/**
+ * Rutas para la gestión de pedidos
+ * GET /api/pedido/:id
+ * returns un pedido
+ */
 router.get("/:id", controllerPedido.readOne)
 
-//Update Pedido
+/**
+ * Rutas para la gestión de pedidos
+ * PUT /api/pedido
+ * body: {pedidoData}
+ * returns pedido actualizado
+ */
 router.put("/", controllerPedido.update)
 
-//Delete Pedidos
+/** Rutas para la gestión de pedidos
+ * DELETE /api/pedido
+ * body: {ids: []}
+ * returns pedidos eliminados
+ */
 router.delete("/", controllerPedido.remove)
 
-//Delete One Pedido
+/** Rutas para la gestión de pedidos
+ * DELETE /api/pedido/:id
+ * returns un pedido eliminado
+ */
 router.delete("/:id", controllerPedido.removeone)
 
 

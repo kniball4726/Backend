@@ -3,7 +3,12 @@ const controllerStorage = require('../controllers/storage')
 const router = express.Router();
 const handleStorage = require('../utils/handleStorage')
 
-
-router.post("/", handleStorage.single('myfile'), controllerStorage.uploadFile);
+/**
+ * Rutas para el almacenamiento de archivos
+ * POST /api/storage
+ * body: form-data (myfile: file)
+ * returns archivo subido
+ */
+router.post("/", handleStorage.single('myfile'), controllerStorage.createItem);
 
 module.exports = router

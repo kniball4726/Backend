@@ -5,9 +5,11 @@ const config = require('../config')
 const db_uri_mongo = config.DB_URI_MONGO
 
 /**
- * Conectar a la base de datos MongoDB Atlas
- * @return {Promise} - Promesa que se resuelve cuando la conexion es exitosa
- * @throws {Error} - Error si la conexion falla
+ * Conexión a la base de datos MongoDB
+ * @module data/mongo
+ * @return {Promise} - Promesa que se resuelve cuando la conexión es exitosa
+ * @throws {Error} - Error si la conexión falla
+ * 
  */
 
 const data = async()=>{

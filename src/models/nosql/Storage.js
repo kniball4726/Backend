@@ -8,33 +8,13 @@ const {Schema, model} = require('mongoose');
  */
 const storageSchema = new Schema(
     {
-        username: {
-            type: String,
+        filename: {
+            type: Number, 
             required: true
         },
-        dni: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        password: {
-            type: String,
+        url: {
+            type: String, 
             required: true
-        },
-        role: {
-            type: ['user', 'admin'],
-            required: true,
-            default: 'user'
-        },
-
-        imagen: {
-            type: String,
-            default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
         }
     },
         { 

@@ -1,6 +1,11 @@
 const multer =  require('multer');
 
-// Configuracion de multer para almacenamiento de archivos
+/**
+ * Configuración de Multer para el manejo de almacenamiento de archivos
+ * @module handleStorage
+ * @return {Object} - Middleware de Multer configurado
+ */
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const pathStorage = `${__dirname}/../storage`;

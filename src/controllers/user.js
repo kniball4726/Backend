@@ -98,10 +98,15 @@ const deleteUser = (req,res)=>{
     res.send("Eliminar un usuario")
 }
 
+const deleteOneUser = (req,res)=>{
+    res.send("Eliminar un usuario por id")
+}
+
 module.exports = {
     readAll,
     createUser,
     readOne,
     updateUser,
-    deleteUser
+    deleteUser,
+    deleteOneUser
 }

@@ -1,9 +1,13 @@
 require('dotenv').config()
+
+
 /**
- * Configuraciones de la aplicacion
- * @module config/config
- * @return {Object} - Objeto con las configuraciones de la aplicacion
+ * Configuración de la aplicación
+ * @module config
+ * @return {Object} - Configuración de la aplicación
+ * 
  */
+
 module.exports = {
     PORT:process.env.PORT || 5000,
     DB_URI_MONGO:process.env.DB_URI_MONGO,

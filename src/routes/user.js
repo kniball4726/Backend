@@ -2,24 +2,49 @@ const express = require('express');
 const router = express.Router();
 const controllerUser = require('../controllers/user')
 
-//TODO: Definir rutas y vincular con el controlador
-
-//Create user
+/**
+ * Rutas para la gestión de usuarios
+ * POST /api/user
+ * body: {userData}
+ * returns usuario creado
+ */
 router.post("/",controllerUser.createUser)
 
-//Read Users
+/** 
+ * Rutas para la gestión de usuarios
+ * GET /api/user
+ * returns lista de usuarios
+ */
 router.get("/", controllerUser.readAll)
 
-//Read One User
+/**
+ * Rutas para la gestión de usuarios
+ * GET /api/user/:id
+ * returns un usuario
+ */
 router.get("/:id",controllerUser.readOne)
 
-//Update Users
+/**
+ * Rutas para la gestión de usuarios
+ * PUT /api/user
+ * body: {userData}
+ * returns usuario actualizado
+ */
 router.put("/",controllerUser.updateUser)
 
-//Delete Users
+/**
+ * Rutas para la gestión de usuarios
+ * DELETE /api/user
+ * body: {ids: []}
+ * returns usuarios eliminados
+ */
 router.delete("/",controllerUser.deleteUser)
 
-
-
+/**
+ * Rutas para la gestión de usuarios
+ * DELETE /api/user/:id
+ * returns un usuario eliminado
+ */
+router.delete("/:id",controllerUser.deleteOneUser)
 
 module.exports = router
