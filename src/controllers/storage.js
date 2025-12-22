@@ -1,3 +1,6 @@
+const {storageModel} = require('../models')
+const config = require('../config/config')
+const public_url = config.PUBLIC_URL
 
 /**
  *                              
@@ -30,7 +33,15 @@
 const createItem = async(req, res)=>{
     const {body,file} = req;
     console.log(file);
-    return res.status(200).send({file})
+    const fileData = {
+        filename:file.filename,
+        url:`${public_url}/${file.filename}`
+    }
+
+    const data = await new storageModel(fileData)
+    data.save();
+
+    return res.status(200).send({data})
 }
 
 module.exports = {

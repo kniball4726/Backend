@@ -9,7 +9,7 @@ const {Schema, model} = require('mongoose');
 const storageSchema = new Schema(
     {
         filename: {
-            type: Number, 
+            type: String, 
             required: true
         },
         url: {
