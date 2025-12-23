@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controllerUser = require('../controllers/user')
+const validateCreateUser = require('../validators/user');
 
 /**
  * Rutas para la gestión de usuarios
@@ -8,7 +9,7 @@ const controllerUser = require('../controllers/user')
  * body: {userData}
  * returns usuario creado
  */
-router.post("/",controllerUser.createUser)
+router.post("/", controllerUser.createUser) //Agregar validadores validateCreateUser()
 
 /** 
  * Rutas para la gestión de usuarios

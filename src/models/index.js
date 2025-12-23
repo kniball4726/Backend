@@ -5,8 +5,8 @@
  */
 
 const models = {
-    userModel: require('./nosql/Users'),
-    pedidosModel: require('./nosql/Pedidos'),
+    userModel: require('./nosql/User'),
+    pedidoModel: require('./nosql/Pedido'),
     storageModel: require('./nosql/Storage')
 };
 

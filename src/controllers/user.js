@@ -1,4 +1,3 @@
-const validator = require('validator');
 const {userModel} = require('../models');
 
 /**
@@ -11,19 +10,6 @@ const createUser = async(req,res)=>{
 
     //Recoger datos del body
     let params = req.body;
-    
-    //Validar datos
-        let validar_username = !validator.isEmpty(params.username);
-        let validar_email = !validator.isEmpty(params.email) || !validator.isEmail(params.email);
-        let validar_password = !validator.isEmpty(params.password) || !validator.isLength(params.password, {min: 6});
-        let validar_role = !validator.isEmpty(params.role) || !validator.isIn(params.role, ['user', 'admin']);
-        let validar_dni = !validator.isEmpty(params.dni) 
-        if(!validar_username || !validar_email || !validar_password || !validar_role || !validar_dni){
-            return res.status(400).json({
-                status: "error",
-                msg: "Validacion de datos incorrecta"
-            });
-        }
 
         //Crear el objeto a guardar
         try {

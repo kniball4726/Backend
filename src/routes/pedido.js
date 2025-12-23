@@ -1,6 +1,7 @@
 const express = require('express');
-const controllerPedido = require('../controllers/pedidos')
+const controllerPedido = require('../controllers/pedido')
 const router = express.Router();
+const validateCreatePedido = require('../validators/pedido');
 
 /**
  * Rutas para la gestión de pedidos
@@ -9,7 +10,7 @@ const router = express.Router();
  * returns pedido creado
  *
  */
-router.post("/", controllerPedido.create)
+router.post("/",controllerPedido.createPedido)//Probar con validadores Revisar videos
 
 /**
  * Rutas para la gestión de pedidos
