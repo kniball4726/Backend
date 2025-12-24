@@ -8,23 +8,23 @@ const validateCreatePedido = require('../validators/pedido');
  * POST /api/pedido
  * body: {pedidoData}
  * returns pedido creado
- *
  */
-router.post("/",controllerPedido.createPedido)//Probar con validadores Revisar videos
-
+router.post("/",validateCreatePedido,controllerPedido.createPedido)//Probar con validadores Revisar videos
+ 
 /**
- * Rutas para la gestión de pedidos
- * GET /api/pedido
- * returns lista de pedidos
- */
-router.get("/", controllerPedido.readAll)
+  * Rutas para la gestión de pedidos
+  * GET /api/pedido
+  * returns lista de pedidos
+  * 
+  */
+router.get("/", controllerPedido.getPedidos)
 
 /**
  * Rutas para la gestión de pedidos
  * GET /api/pedido/:id
  * returns un pedido
  */
-router.get("/:id", controllerPedido.readOne)
+router.get("/:id/:nota_pedido/:cliente", controllerPedido.getPedido)
 
 /**
  * Rutas para la gestión de pedidos
@@ -32,20 +32,15 @@ router.get("/:id", controllerPedido.readOne)
  * body: {pedidoData}
  * returns pedido actualizado
  */
-router.put("/", controllerPedido.update)
+router.put("/", controllerPedido.updatePedido)
 
 /** Rutas para la gestión de pedidos
  * DELETE /api/pedido
  * body: {ids: []}
  * returns pedidos eliminados
  */
-router.delete("/", controllerPedido.remove)
+router.delete("/:id/:nota_pedido/:cliente", controllerPedido.removePedido)
 
-/** Rutas para la gestión de pedidos
- * DELETE /api/pedido/:id
- * returns un pedido eliminado
- */
-router.delete("/:id", controllerPedido.removeone)
 
 
 module.exports = router

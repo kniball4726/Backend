@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const controllerUser = require('../controllers/user')
-const validateCreateUser = require('../validators/user');
+const {validateCreateUser, validateGetUser} = require('../validators/user');
+
+const customHeader = require('../middleware/customHeader');
 
 /**
  * Rutas para la gestión de usuarios
@@ -9,21 +11,21 @@ const validateCreateUser = require('../validators/user');
  * body: {userData}
  * returns usuario creado
  */
-router.post("/", controllerUser.createUser) //Agregar validadores validateCreateUser()
+router.post("/", validateCreateUser, controllerUser.createUser) //Agregar validadores validateCreateUser()
 
 /** 
  * Rutas para la gestión de usuarios
  * GET /api/user
  * returns lista de usuarios
  */
-router.get("/", controllerUser.readAll)
+router.get("/", controllerUser.getUsers)
 
 /**
  * Rutas para la gestión de usuarios
  * GET /api/user/:id
  * returns un usuario
  */
-router.get("/:id",controllerUser.readOne)
+router.get("/:id",validateGetUser,controllerUser.getUser)
 
 /**
  * Rutas para la gestión de usuarios
@@ -39,13 +41,7 @@ router.put("/",controllerUser.updateUser)
  * body: {ids: []}
  * returns usuarios eliminados
  */
-router.delete("/",controllerUser.deleteUser)
+router.delete("/:id",controllerUser.deleteUser)
 
-/**
- * Rutas para la gestión de usuarios
- * DELETE /api/user/:id
- * returns un usuario eliminado
- */
-router.delete("/:id",controllerUser.deleteOneUser)
 
 module.exports = router
