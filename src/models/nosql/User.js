@@ -1,4 +1,5 @@
 const {Schema, model, version} = require('mongoose');
+const moongooseDelete = require('mongoose-delete');
 
 
 /**
@@ -8,34 +9,12 @@ const {Schema, model, version} = require('mongoose');
  */
 const userSchema = new Schema(
     {
-        username: {
-            type: String,
-            required: true
-        },
-        dni: {
-            type: Number,
-            required: true,
-            unique: true
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        password: {
-            type: String,
-            required: true
-        },
-        role: {
-            type: ['user', 'admin'],
-            required: true,
-            default: 'user'
-        },
-
-        imagen: {
-            type: String,
-            default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-        }
+        username: {type: String,required: true},
+        dni: {type: Number,required: true,unique: true},
+        email: {type: String,required: true,unique: true},
+        password: {type: String,required: true},
+        role: {type: ['user', 'admin'],required: true,default: 'user'},
+        imagen: {type: String, default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"}
     },
         { 
             timestamps: true,
@@ -43,7 +22,7 @@ const userSchema = new Schema(
         }
 );
 
-
+userSchema.plugin(moongooseDelete, {overrideMethods: 'all'});
 const User = model('User', userSchema, 'users');
 
 module.exports = User;

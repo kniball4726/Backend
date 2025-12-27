@@ -1,7 +1,7 @@
 const express = require('express');
 const controllerPedido = require('../controllers/pedido')
 const router = express.Router();
-const validateCreatePedido = require('../validators/pedido');
+const {validateCreatePedido, validateGetPedido }= require('../validators/pedido');
 
 /**
  * Rutas para la gestión de pedidos
@@ -24,7 +24,7 @@ router.get("/", controllerPedido.getPedidos)
  * GET /api/pedido/:id
  * returns un pedido
  */
-router.get("/:id/:nota_pedido/:cliente", controllerPedido.getPedido)
+router.get("/:id",validateGetPedido,controllerPedido.getPedido)
 
 /**
  * Rutas para la gestión de pedidos
@@ -32,15 +32,12 @@ router.get("/:id/:nota_pedido/:cliente", controllerPedido.getPedido)
  * body: {pedidoData}
  * returns pedido actualizado
  */
-router.put("/", controllerPedido.updatePedido)
+router.put("/:id",validateGetPedido,validateCreatePedido,controllerPedido.updatePedido)
 
 /** Rutas para la gestión de pedidos
  * DELETE /api/pedido
  * body: {ids: []}
  * returns pedidos eliminados
  */
-router.delete("/:id/:nota_pedido/:cliente", controllerPedido.removePedido)
-
-
-
+router.delete("/:id",validateGetPedido,controllerPedido.deletePedido)
 module.exports = router

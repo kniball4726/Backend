@@ -24,4 +24,13 @@ const validateCreatePedido =
         (req, res, next) => validateResults(req, res, next)
     ];
 
-module.exports = validateCreatePedido;
+const validateGetPedido = 
+            [
+                check('id').isMongoId().exists().notEmpty().withMessage('El ID proporcionado no es válido.'),
+                (req, res, next) => validateResults(req, res, next)
+            ];
+
+module.exports = { 
+    validateCreatePedido, 
+    validateGetPedido 
+}

@@ -33,7 +33,7 @@ router.get("/:id",validateGetUser,controllerUser.getUser)
  * body: {userData}
  * returns usuario actualizado
  */
-router.put("/",controllerUser.updateUser)
+router.put("/:id",validateGetUser,validateCreateUser,controllerUser.updateUser)
 
 /**
  * Rutas para la gestión de usuarios
@@ -41,7 +41,7 @@ router.put("/",controllerUser.updateUser)
  * body: {ids: []}
  * returns usuarios eliminados
  */
-router.delete("/:id",controllerUser.deleteUser)
+router.delete("/:id",validateGetUser,controllerUser.deleteUser)
 
 
 module.exports = router

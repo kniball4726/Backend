@@ -1,4 +1,5 @@
 const {Schema, model} = require('mongoose');
+const moongooseDelete = require('mongoose-delete');
 
 /**
  * Definicion del esquema y modelo de Pedido
@@ -23,6 +24,7 @@ const pedidoSchema = new Schema(
     }
 );
 
+pedidoSchema.plugin(moongooseDelete, {overrideMethods: 'all'});
 const Pedido = model('Pedido', pedidoSchema, 'pedidos');
 
 module.exports = Pedido;

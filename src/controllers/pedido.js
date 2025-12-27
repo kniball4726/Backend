@@ -4,42 +4,46 @@ const handleHttpError = require('../utils/handleError');
 
 /**
  * Crear un pedido
+ * 
  * @param {*} req 
  * @param {*} res 
  * @returns 
  */
-const createPedido = async(req, res) => {
+const createPedido = async(req,res)=>{
+
     //Recoger datos del body
-       let params = matchedData(req);
-   
-           //Crear el objeto a guardar
-           try {
-                    //Crear el objeto usuario a guardar
-                   const pedido = await pedidoModel.create(params);
-                  // await pedido.save()
+    req = matchedData(req);
+    const params = req;
 
-                   return res.status(201).json({
-                       status: "success",
-                       msg: "Pedido creado correctamente",
-                       pedido
+        //Crear el objeto a guardar
+        try {
+                 //Crear el objeto pedido a guardar
+                const pedido = await pedidoModel.create(params);
+                //await user.save()
 
-                   });
-                   
-               } catch (e) {
-                   handleHttpError(res, "ERROR_AL_CREAR_PEDIDO", 403);
-               }
-   
-   }
-   
-/**
- * Leer todos los pedidos
+                return res.status(201).json({
+                    status: "success",
+                    msg: "Pedido creado correctamente",
+                    pedido
+                });
+                
+            } catch (e) {
+                 handleHttpError(res, "ERROR_AL_CREAR_PEDIDO", 403);
+            }
+
+}
+
+
+/**  
+ * Listar pedidos
+ * 
  * @param {*} req 
  * @param {*} res 
- * @returns 
  */
+
 const getPedidos = async(req,res)=>{
     try {
-        const pedidos = await pedidosModel.find();
+        const pedidos = await pedidoModel.find();
         return res.status(200).json({
             status: "success",
             pedidos
@@ -50,55 +54,88 @@ const getPedidos = async(req,res)=>{
 
 }   
 
+
 /**
- * Leer un pedido
+ * Mostrar un pedido
+ * 
  * @param {*} req 
  * @param {*} res 
- * @returns 
  */
-const getPedido = async(req, res) => {
-    
+const getPedido = async(req,res)=>{
+    req=matchedData(req);
+    const {id}=req;
     try {
-    
-        return res.status(200).send("Mostrar un pedido")
-    } catch (e) {
+        const pedido = await pedidoModel.findById(id);
+        res.send(pedido)
+        }
+    catch (e) {
         handleHttpError(res, "ERROR_AL_OBTENER_PEDIDO", 403);
     }
 }
 
+
 /**
  * Actualizar un pedido
+ * 
  * @param {*} req 
  * @param {*} res 
- * @returns 
  */
-const updatePedido = async(req, res) => {
+
+const updatePedido = async (req, res) => {
+    // Extraemos solo los datos validados
+    req = matchedData(req)
+    const {id,...body} = req;
     try {
+        // Añadimos el objeto de configuración { new: true }
+        const pedido = await pedidoModel.findByIdAndUpdate(
+            id, 
+            body, 
+            { new: true} 
+        );
+
+        return res.status(200).json({ // Cambiado a 200 porque es una actualización, no creación
+            status: "success",
+            msg: "Pedido actualizado correctamente",
+            pedido
+        });
         
     } catch (e) {
-        handleHttpError(res, "ERROR_AL_ACTUALIZAR_PEDIDO", 403);
+        console.log(e); // Importante para debuguear
+        handleHttpError(res, "ERROR_AL_ACTUALIZAR_PEDIDO", 500);
     }
 }
 
 /**
- * Eliminar todos los pedidos
+ * Eliminar un pedido
+ * 
  * @param {*} req 
  * @param {*} res 
- * @returns 
  */
-const removePedido = async(req, res) => {
+
+const deletePedido = async(req,res)=>{
+    
+    req = matchedData(req);
+    
+    const {id} = req;
+    
     try {
-        
-    } catch (e) {
-        handleHttpError(res, "ERROR_AL_ELIMINAR_PEDIDOS", 403);
-    }    
+        const user = await pedidoModel.delete(id);
+        return res.send({
+            status: "success",
+            message: "Pedido eliminado correctamente",
+            user
+        })
+        }
+    catch (e) {
+        handleHttpError(res, "ERROR_AL_ELIMINAR_PEDIDO", 403);
+        }
 }
 
 
 module.exports = {
-    createPedido,
     getPedidos,
+    createPedido,
+    getPedido,
     updatePedido,
-    removePedido,
-    getPedido
+    deletePedido
 }

@@ -3,4 +3,4 @@ const handleHttpError = (res, message = "Algo salió mal", code = 403) => {
     res.send({ error: message });
 }
 
-module.exports = { handleHttpError };
+module.exports = handleHttpError;

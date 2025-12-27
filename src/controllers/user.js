@@ -4,6 +4,7 @@ const handleHttpError = require('../utils/handleError');
 
 /**
  * Crear un usuario
+ * 
  * @param {*} req 
  * @param {*} res 
  * @returns 
@@ -11,7 +12,8 @@ const handleHttpError = require('../utils/handleError');
 const createUser = async(req,res)=>{
 
     //Recoger datos del body
-    let params = matchedData(req);
+    req = matchedData(req);
+    const params = req;
 
         //Crear el objeto a guardar
         try {
@@ -26,18 +28,19 @@ const createUser = async(req,res)=>{
                 });
                 
             } catch (e) {
-                 handleHttpError(res, "ERROR_AL_OBTENER_USUARIOS", 403);
+                 handleHttpError(res, "ERROR_AL_CREAR_USUARIO", 403);
             }
 
 }
 
 
-/**
+/**  
+ * Listar usuarios
  * 
  * @param {*} req 
  * @param {*} res 
- * @returns 
  */
+
 const getUsers = async(req,res)=>{
     try {
         const users = await userModel.find();
@@ -54,6 +57,7 @@ const getUsers = async(req,res)=>{
 
 /**
  * Mostrar un usuario
+ * 
  * @param {*} req 
  * @param {*} res 
  */
@@ -72,22 +76,42 @@ const getUser = async(req,res)=>{
 
 /**
  * Actualizar un usuario
+ * 
  * @param {*} req 
  * @param {*} res 
  */
-const updateUser = async(req,res)=>{
+
+const updateUser = async (req, res) => {
+    // Extraemos solo los datos validados
+    req = matchedData(req)
+    const {id,...body} = req;
     try {
-       
+        // Añadimos el objeto de configuración { new: true }
+        const user = await userModel.findByIdAndUpdate(
+            id, 
+            body, 
+            { new: true} 
+        );
+
+        return res.status(200).json({ // Cambiado a 200 porque es una actualización, no creación
+            status: "success",
+            msg: "Usuario actualizado correctamente",
+            user
+        });
+        
     } catch (e) {
-        handleHttpError(res, "ERROR_AL_ACTUALIZAR_USUARIO", 403);
+        console.log(e); // Importante para debuguear
+        handleHttpError(res, "ERROR_AL_ACTUALIZAR_USUARIO", 500);
     }
 }
 
 /**
  * Eliminar un usuario
+ * 
  * @param {*} req 
  * @param {*} res 
  */
+
 const deleteUser = async(req,res)=>{
     
     req = matchedData(req);
@@ -95,7 +119,7 @@ const deleteUser = async(req,res)=>{
     const {id} = req;
     
     try {
-        const user = await userModel.deleteOne(id);
+        const user = await userModel.delete(id);
         return res.send({
             status: "success",
             message: "Usuario eliminado correctamente",
