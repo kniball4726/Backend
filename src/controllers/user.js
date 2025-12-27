@@ -92,11 +92,7 @@ const updateUser = async (req, res) => {
     const {id,...body} = req;
     try {
         // Añadimos el objeto de configuración { new: true }
-        const user = await userModel.findByIdAndUpdate(
-            id, 
-            body, 
-            { new: true} 
-        );
+        const user = await userModel.findByIdAndUpdate(id,body,{ new: true});
         if (!user) {
             return handleHttpError(res, "USUARIO_NO_ENCONTRADO", 404);
         }
@@ -121,11 +117,12 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async(req,res)=>{
     
-    req = matchedData(req);
-    
-    const {id} = req;
-    
     try {
+
+        req = matchedData(req);
+    
+        const {id} = req;
+    
         const user = await userModel.deleteOne(id);
         if (!user) {
             return handleHttpError(res, "USUARIO_NO_ENCONTRADO", 404);
@@ -143,7 +140,10 @@ const deleteUser = async(req,res)=>{
         }
 }
 
-
+/**
+ * Exportar las funciones del controlador
+ * 
+ */
 module.exports = {
     getUsers,
     createUser,

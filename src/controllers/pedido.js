@@ -11,12 +11,13 @@ const handleHttpError = require('../utils/handleError');
  */
 const createPedido = async(req,res)=>{
 
-    //Recoger datos del body
-    req = matchedData(req);
-    const params = req;
-
+    
         //Crear el objeto a guardar
         try {
+                //Recoger datos del body
+                req = matchedData(req);
+                const params = req;
+
                  //Crear el objeto pedido a guardar
                 const pedido = await pedidoModel.create(params);
 
@@ -64,9 +65,10 @@ const getPedidos = async(req,res)=>{
  * @param {*} res 
  */
 const getPedido = async(req,res)=>{
-    req=matchedData(req);
-    const {id}=req;
     try {
+        req=matchedData(req);
+        const {id}=req;
+    
         const pedido = await pedidoModel.findById(id);
         if (!pedido) {
             return handleHttpError(res, "PEDIDO_NO_ENCONTRADO", 404);
@@ -87,10 +89,11 @@ const getPedido = async(req,res)=>{
  */
 
 const updatePedido = async (req, res) => {
-    // Extraemos solo los datos validados
-    req = matchedData(req)
-    const {id,...body} = req;
     try {
+        // Extraemos solo los datos validados
+        req = matchedData(req)
+        const {id,...body} = req;
+    
         // Añadimos el objeto de configuración { new: true }
         const pedido = await pedidoModel.findByIdAndUpdate(
             id, 
@@ -122,11 +125,12 @@ const updatePedido = async (req, res) => {
 
 const deletePedido = async(req,res)=>{
     
-    req = matchedData(req);
-    
-    const {id} = req;
     
     try {
+        req = matchedData(req);
+    
+        const {id} = req;
+
         const user = await pedidoModel.deleteOne(id);
         if (!user) {
             return handleHttpError(res, "PEDIDO_NO_ENCONTRADO", 404);
