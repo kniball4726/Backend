@@ -10,7 +10,7 @@ const { validateCreateStorage, validateGetStorage } = require('../validators/sto
  * body: form-data (myfile: file)
  * returns archivo subido
  */
-router.post("/",validateCreateStorage ,handleStorage.single('myfile'), controllerStorage.createItem);
+router.post("/",handleStorage.single('myfile'), controllerStorage.createItem);
 
 /**  
  * Rutas para el almacenamiento de archivos
@@ -25,12 +25,12 @@ router.get("/", controllerStorage.getItems)
  * GET /api/storage/:id
  * returns un archivo
  */
-router.get("/:id",validateGetStorage, controllerStorage.getItem)   
+router.get("/:id", validateGetStorage,controllerStorage.getItem)   
 
 /** Rutas para el almacenamiento de archivos
  * DELETE /api/storage/:id
  * returns archivo eliminado
  */
-router.delete("/:id",controllerStorage.deleteItem) 
+router.delete("/:id", controllerStorage.deleteItem) 
 
 module.exports = router

@@ -19,7 +19,6 @@ const createPedido = async(req,res)=>{
         try {
                  //Crear el objeto pedido a guardar
                 const pedido = await pedidoModel.create(params);
-                //await user.save()
 
                 return res.status(201).json({
                     status: "success",

@@ -1,6 +1,11 @@
+const fs = require('fs')
+const {matchedData} = require('express-validator')
+const handleHttpError = require('../utils/handleError')
 const {storageModel} = require('../models')
 const config = require('../config/config')
 const public_url = config.PUBLIC_URL
+const MEDIA_PATH = `${__dirname}/../storage`
+
 
 /**
  * Crear un recurso de almacenamiento
@@ -10,14 +15,13 @@ const public_url = config.PUBLIC_URL
 
 const createItem = async(req, res)=>{
     const {body,file} = req;
-    console.log(file);
     const fileData = {
         filename:file.filename,
         url:`${public_url}/${file.filename}`
     }
 
-    const data = await new storageModel(fileData)
-    data.save();
+    const data = await storageModel.create(fileData);
+
 
     return res.status(200).send({data})
 }
@@ -54,19 +58,20 @@ const getItems = async(req,res)=>{
  */
 
 const getItem = async(req,res)=>{
-    req=matchedData(req);
-    const {id}=req;
-    try {
-        const item = await storageModel.findById(id);
-        if (!item) {
-            return handleHttpError(res, "RECURSO_NO_ENCONTRADO", 404);
+        req=matchedData(req);
+        const {id}=req;
+        try {
+            const item = await storageModel.findById(id);
+            console.log(item);
+            if (!item) {
+                return handleHttpError(res, "ITEM_NO_ENCONTRADO", 404);
+            }
+            return res.status(200).send(item)
+            }
+        catch (e) {
+            handleHttpError(res, "ERROR_AL_OBTENER_ITEM", 403);
         }
-        return res.status(200).send(item);
-        }
-    catch (e) {
-        handleHttpError(res, "ERROR_AL_OBTENER_RECURSO", 403);
     }
-}
 
 
 /**
@@ -111,16 +116,17 @@ const updateItem = async (req, res) => {
 
 const deleteItem = async(req,res)=>{
     
-    req = matchedData(req);
-    
-    const {id} = req;
     
     try {
+        req = matchedData(req);
+    
+        const {id} = req;
+    
         const item = await storageModel.deleteOne(id);
         if (!item) {
             return handleHttpError(res, "RECURSO_NO_ENCONTRADO", 404);
         }
-        return res.send({
+        return res.status(200).json({
             status: "success",
             message: "Recurso eliminado correctamente",
             item

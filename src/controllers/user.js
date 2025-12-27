@@ -11,16 +11,15 @@ const handleHttpError = require('../utils/handleError');
  */
 const createUser = async(req,res)=>{
 
-    //Recoger datos del body
-    req = matchedData(req);
-    const params = req;
-
-        //Crear el objeto a guardar
+           //Crear el objeto a guardar
         try {
+             //Recoger datos del body
+            req = matchedData(req);
+            const params = req;
                  //Crear el objeto usuario a guardar
-                const user = await userModel.create(params);
+            const user = await userModel.create(params);
 
-                return res.status(201).json({
+            return res.status(201).json({
                     status: "success",
                     msg: "Usuario creado correctamente",
                     user
