@@ -32,6 +32,9 @@ const createItem = async(req, res)=>{
 const getItems = async(req,res)=>{
     try {
         const items = await storageModel.find();
+        if (items.length === 0) {
+            return handleHttpError(res, "NO_HAY_RECURSOS", 404);
+        }
         return res.status(200).json({
             status: "success",
             items
@@ -55,7 +58,10 @@ const getItem = async(req,res)=>{
     const {id}=req;
     try {
         const item = await storageModel.findById(id);
-        res.send(item)
+        if (!item) {
+            return handleHttpError(res, "RECURSO_NO_ENCONTRADO", 404);
+        }
+        return res.status(200).send(item);
         }
     catch (e) {
         handleHttpError(res, "ERROR_AL_OBTENER_RECURSO", 403);
@@ -81,7 +87,9 @@ const updateItem = async (req, res) => {
             body, 
             { new: true} 
         );
-
+        if (!item) {
+            return handleHttpError(res, "RECURSO_NO_ENCONTRADO", 404);
+        }
         return res.status(200).json({ // Cambiado a 200 porque es una actualización, no creación
             status: "success",
             msg: "Recurso actualizado correctamente",
@@ -108,7 +116,10 @@ const deleteItem = async(req,res)=>{
     const {id} = req;
     
     try {
-        const item = await storageModel.delete(id);
+        const item = await storageModel.deleteOne(id);
+        if (!item) {
+            return handleHttpError(res, "RECURSO_NO_ENCONTRADO", 404);
+        }
         return res.send({
             status: "success",
             message: "Recurso eliminado correctamente",
@@ -116,6 +127,7 @@ const deleteItem = async(req,res)=>{
         })
         }
     catch (e) {
+        console.log(e);
         handleHttpError(res, "ERROR_AL_ELIMINAR_RECURSO", 403);
         }
 }

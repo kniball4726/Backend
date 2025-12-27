@@ -41,7 +41,7 @@ router.put("/:id",validateGetUser,validateCreateUser,controllerUser.updateUser)
  * body: {ids: []}
  * returns usuarios eliminados
  */
-router.delete("/:id",validateGetUser,controllerUser.deleteUser)
+router.delete("/:id",controllerUser.deleteUser)
 
 
 module.exports = router

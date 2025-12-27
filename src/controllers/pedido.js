@@ -44,6 +44,9 @@ const createPedido = async(req,res)=>{
 const getPedidos = async(req,res)=>{
     try {
         const pedidos = await pedidoModel.find();
+        if (pedidos.length === 0) {
+            return handleHttpError(res, "NO_HAY_PEDIDOS", 404);
+        }
         return res.status(200).json({
             status: "success",
             pedidos
@@ -66,6 +69,9 @@ const getPedido = async(req,res)=>{
     const {id}=req;
     try {
         const pedido = await pedidoModel.findById(id);
+        if (!pedido) {
+            return handleHttpError(res, "PEDIDO_NO_ENCONTRADO", 404);
+        }
         res.send(pedido)
         }
     catch (e) {
@@ -92,6 +98,9 @@ const updatePedido = async (req, res) => {
             body, 
             { new: true} 
         );
+        if (!pedido) {
+            return handleHttpError(res, "PEDIDO_NO_ENCONTRADO", 404);
+        }
 
         return res.status(200).json({ // Cambiado a 200 porque es una actualización, no creación
             status: "success",
@@ -119,7 +128,10 @@ const deletePedido = async(req,res)=>{
     const {id} = req;
     
     try {
-        const user = await pedidoModel.delete(id);
+        const user = await pedidoModel.deleteOne(id);
+        if (!user) {
+            return handleHttpError(res, "PEDIDO_NO_ENCONTRADO", 404);
+        }
         return res.send({
             status: "success",
             message: "Pedido eliminado correctamente",
@@ -127,6 +139,7 @@ const deletePedido = async(req,res)=>{
         })
         }
     catch (e) {
+        console.log(e);
         handleHttpError(res, "ERROR_AL_ELIMINAR_PEDIDO", 403);
         }
 }

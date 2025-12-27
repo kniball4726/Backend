@@ -31,6 +31,6 @@ router.get("/:id",validateGetStorage, controllerStorage.getItem)
  * DELETE /api/storage/:id
  * returns archivo eliminado
  */
-router.delete("/:id",validateGetStorage, controllerStorage.deleteItem) 
+router.delete("/:id",controllerStorage.deleteItem) 
 
 module.exports = router

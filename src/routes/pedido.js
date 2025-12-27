@@ -39,5 +39,6 @@ router.put("/:id",validateGetPedido,validateCreatePedido,controllerPedido.update
  * body: {ids: []}
  * returns pedidos eliminados
  */
-router.delete("/:id",validateGetPedido,controllerPedido.deletePedido)
+router.delete("/:id",controllerPedido.deletePedido)
+
 module.exports = router

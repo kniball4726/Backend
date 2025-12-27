@@ -19,7 +19,6 @@ const createUser = async(req,res)=>{
         try {
                  //Crear el objeto usuario a guardar
                 const user = await userModel.create(params);
-                //await user.save()
 
                 return res.status(201).json({
                     status: "success",
@@ -28,7 +27,8 @@ const createUser = async(req,res)=>{
                 });
                 
             } catch (e) {
-                 handleHttpError(res, "ERROR_AL_CREAR_USUARIO", 403);
+                console.log(e);
+                handleHttpError(res, "ERROR_AL_CREAR_USUARIO", 403);
             }
 
 }
@@ -44,6 +44,9 @@ const createUser = async(req,res)=>{
 const getUsers = async(req,res)=>{
     try {
         const users = await userModel.find();
+        if (users.length === 0) {
+            return handleHttpError(res, "NO_HAY_USUARIOS", 404);
+        }
         return res.status(200).json({
             status: "success",
             users
@@ -66,6 +69,9 @@ const getUser = async(req,res)=>{
     const {id}=req;
     try {
         const user = await userModel.findById(id);
+        if (!user) {
+            return handleHttpError(res, "USUARIO_NO_ENCONTRADO", 404);
+        }
         res.send(user)
         }
     catch (e) {
@@ -92,7 +98,9 @@ const updateUser = async (req, res) => {
             body, 
             { new: true} 
         );
-
+        if (!user) {
+            return handleHttpError(res, "USUARIO_NO_ENCONTRADO", 404);
+        }
         return res.status(200).json({ // Cambiado a 200 porque es una actualización, no creación
             status: "success",
             msg: "Usuario actualizado correctamente",
@@ -119,7 +127,11 @@ const deleteUser = async(req,res)=>{
     const {id} = req;
     
     try {
-        const user = await userModel.delete(id);
+        const user = await userModel.deleteOne(id);
+        if (!user) {
+            return handleHttpError(res, "USUARIO_NO_ENCONTRADO", 404);
+        }
+        
         return res.send({
             status: "success",
             message: "Usuario eliminado correctamente",
@@ -127,6 +139,7 @@ const deleteUser = async(req,res)=>{
         })
         }
     catch (e) {
+        console.log(e);
         handleHttpError(res, "ERROR_AL_ELIMINAR_USUARIO", 403);
         }
 }
