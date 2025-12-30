@@ -1,9 +1,10 @@
+const config = require('../config');
 const customHeader = (req, res, next) => {  
 
     try {
         const api_key = req.headers.api_key;
 
-        if (api_key === 'gregory123') {
+        if (api_key === config.api_key) {
             console.log("API Key correcta");
             next();
         } else {

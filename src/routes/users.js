@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const controllerUser = require('../controllers/user')
-const {validateCreateUser, validateGetUser} = require('../validators/user');
-
-const customHeader = require('../middleware/customHeader');
+const controllerUser = require('../controllers/users')
+const {validateCreateUser, validateGetUser} = require('../validators/users');
 
 /**
  * Rutas para la gestión de usuarios

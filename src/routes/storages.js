@@ -1,8 +1,8 @@
 const express = require('express');
-const controllerStorage = require('../controllers/storage')
+const controllerStorage = require('../controllers/storages')
 const router = express.Router();
 const handleStorage = require('../utils/handleStorage');
-const { validateCreateStorage, validateGetStorage } = require('../validators/storage');
+const { validateCreateStorage, validateGetStorage } = require('../validators/storages');
 
 /**
  * Rutas para el almacenamiento de archivos

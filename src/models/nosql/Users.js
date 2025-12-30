@@ -12,7 +12,7 @@ const userSchema = new Schema(
         username: {type: String,required: true},
         dni: {type: Number,required: true,unique: true},
         email: {type: String,required: true,unique: true},
-        password: {type: String,required: true},
+        password: {type: String,required: true, select: false},
         role: {type: ['user', 'admin'],required: true,default: 'user'},
         imagen: {type: String, default: "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"}
     },

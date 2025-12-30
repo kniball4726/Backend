@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs');
 
-
 /** 
  * Encriptar una contraseña
  * 
@@ -10,7 +9,7 @@ const bcrypt = require('bcryptjs');
 
 const encrypt = async(password) => {
     const hash = await bcrypt.hash(password, 10);
-    return hash;
+    return hash; 
 };
 
 /**
@@ -22,8 +21,7 @@ const encrypt = async(password) => {
  */
 
 const compare = async(password, hash) => {
-    const isMatch = await bcrypt.compare(password, hash);
-    return isMatch;
+    return await bcrypt.compare(password, hash);
 };
 
 module.exports = { encrypt, compare };

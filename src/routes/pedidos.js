@@ -1,7 +1,8 @@
 const express = require('express');
-const controllerPedido = require('../controllers/pedido')
+const controllerPedido = require('../controllers/pedidos')
 const router = express.Router();
-const {validateCreatePedido, validateGetPedido }= require('../validators/pedido');
+const {validateCreatePedido, validateGetPedido }= require('../validators/pedidos');
+const authMiddleware = require('../middleware/session')
 
 /**
  * Rutas para la gestión de pedidos
@@ -17,7 +18,7 @@ router.post("/",validateCreatePedido,controllerPedido.createPedido)//Probar con 
   * returns lista de pedidos
   * 
   */
-router.get("/", controllerPedido.getPedidos)
+router.get("/", authMiddleware,controllerPedido.getPedidos)
 
 /**
  * Rutas para la gestión de pedidos

@@ -5,9 +5,9 @@
  */
 
 const models = {
-    userModel: require('./nosql/User'),
-    pedidoModel: require('./nosql/Pedido'),
-    storageModel: require('./nosql/Storage')
+    userModel: require('./nosql/Users'),
+    pedidoModel: require('./nosql/Pedidos'),
+    storageModel: require('./nosql/Storages')
 };
 
 module.exports = models;
