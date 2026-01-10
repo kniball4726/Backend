@@ -14,13 +14,21 @@ const validateResults = require('../utils/handleValidator');
 
 const validateCreateUser = 
             [
-                check('username').isString().exists().notEmpty().isLength({ min: 1 }).withMessage('El nombre de usuario es obligatorio y debe ser una cadena de texto.'),
+                check('username').notEmpty().exists().isString().withMessage('El nombre de usuario es obligatorio y debe ser una cadena de texto.'),
                 check('email').notEmpty().exists().isEmail().withMessage('El correo electrónico debe ser válido.'),
                 check('password').notEmpty().exists().isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres.').isString(),
                 check('dni').isNumeric().exists().notEmpty().withMessage('El DNI es obligatorio y debe ser numérico.'),
                 check('role').exists().notEmpty().optional().isIn(['user', 'admin']).withMessage('El rol debe ser user o admin.'),
                 (req, res, next) => validateResults(req, res, next)
             ];
+
+const validateLoginUser = 
+            [
+                check('email').notEmpty().exists().isEmail().withMessage('El correo electrónico debe ser válido.'),
+                check('password').notEmpty().exists().isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres.').isString(),
+                (req, res, next) => validateResults(req, res, next)
+            ];
+
 
 const validateGetUser = 
             [
@@ -30,5 +38,6 @@ const validateGetUser =
 
 module.exports = {
     validateCreateUser,
-    validateGetUser
+    validateGetUser,
+    validateLoginUser
 }

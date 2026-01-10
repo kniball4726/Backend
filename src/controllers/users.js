@@ -1,6 +1,8 @@
 const { matchedData } = require('express-validator');
 const {userModel} = require('../models');
 const handleHttpError = require('../utils/handleError');
+const {encrypt, compare} = require('../utils/handlePassword');
+const { tokenSign } = require('../utils/handlerJwt');
 
 /**
  * Crear un usuario
@@ -10,26 +12,25 @@ const handleHttpError = require('../utils/handleError');
  * @returns 
  */
 const createUser = async(req,res)=>{
+    try {
+        req = matchedData(req);
+        const password = await encrypt (req.password);
+        const body = {...req, password};
+        const dataUser = await userModel.create(body);
+        
+        dataUser.set("password", undefined, { strict: false });
 
-           //Crear el objeto a guardar
-        try {
-             //Recoger datos del body
-            req = matchedData(req);
-            const params = req;
-                 //Crear el objeto usuario a guardar
-            const user = await userModel.create(params);
-
-            return res.status(201).json({
-                    status: "success",
-                    msg: "Usuario creado correctamente",
-                    user
-                });
-                
-            } catch (e) {
-                console.log(e);
-                handleHttpError(res, "ERROR_AL_CREAR_USUARIO", 403);
-            }
-
+        const data = {
+            token: await tokenSign(dataUser),
+            user: dataUser
+    }
+        res.send({data});  
+          
+    } catch (error) {
+        console.log(error);
+        handleHttpError(res, "ERROR_AL_CREAR_USUARIO", 403);
+    }
+       
 }
 
 
@@ -144,10 +145,49 @@ const deleteUser = async(req,res)=>{
  * Exportar las funciones del controlador
  * 
  */
+
+const loginUser = async(req,res)=>{
+
+    
+    try {
+        req = matchedData(req);
+        const user = await userModel.findOne({email: req.email}).select("username email password role");
+        if(!user){
+            handleHttpError(res, "USUARIO_NO_EXISTE", 404);
+            return;
+        }
+        const hashPassword = user.get("password");
+        const check = await compare(req.password, hashPassword);
+        if(!check){
+            handleHttpError(res, "PASSWORD_INCORRECTO", 401);
+            return;
+        }
+        user.set("password", undefined, { strict: false });
+        const token = await tokenSign(user);
+
+
+        return res.status(200).json({
+            status: "success",
+            message: "Inicio de sesión exitoso",
+            user:{
+                id: user._id,
+                usernmame: user.username,
+                email: user.email,
+                role: user.role,
+            },
+            token
+        });        
+    } catch (error) {
+        handleHttpError(res, "ERROR_AL_INICIAR_SESION", 403);
+    }   
+}
+
+
 module.exports = {
     getUsers,
     createUser,
     getUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    loginUser
 }

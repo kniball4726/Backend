@@ -20,8 +20,8 @@ const encrypt = async(password) => {
  * @returns 
  */
 
-const compare = async(password, hash) => {
-    return await bcrypt.compare(password, hash);
+const compare = (password, hash) => {
+    return bcrypt.compareSync(password, hash);
 };
 
 module.exports = { encrypt, compare };
