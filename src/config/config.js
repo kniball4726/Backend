@@ -13,5 +13,6 @@ module.exports = {
     DB_URI_MONGO:process.env.DB_URI_MONGO,
     PUBLIC_URL:process.env.PUBLIC_URL || 'http://localhost:5000',
     JWT_SECRET: process.env.JWT_SECRET,
-    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN
+    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,
+    SLACK_WEBHOOK_URL: process.env.SLACK_WEBHOOK_URL
 }

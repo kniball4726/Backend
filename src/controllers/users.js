@@ -48,8 +48,6 @@ const createUser = async(req,res)=>{
 const getUsers = async(req,res)=>{
     try {
         const users = await userModel.find();
-        const userT = req.user.username;
-        console.log(userT);
         if (users.length === 0) {
             return handleHttpError(res, "NO_HAY_USUARIOS", 404);
         }

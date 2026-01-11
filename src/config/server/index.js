@@ -5,6 +5,8 @@ const app = express();
 const cors = require('cors')
 const port = config.PORT
 const allRoutes = require('../../routes')
+const morganbody = require('morgan-body');
+const loggerStream = require('../../utils/handleLogger');
 
 /**
  * Middlewares de la aplicación
@@ -16,6 +18,13 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors({origin: '*', allowedHeaders: ['Authorization', 'Content-Type']}));
 app.use("/uploads",express.static('src/storage'))
+
+morganbody(app, {
+    noColors: true,
+    stream: loggerStream,
+    skip: function (req, res) { return res.statusCode < 400 },
+
+});
 
 /**
  * Rutas de la API
