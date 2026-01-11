@@ -1,5 +1,5 @@
 const { matchedData } = require('express-validator');
-const {userModel} = require('../models');
+const {userModel, logModel} = require('../models');
 const handleHttpError = require('../utils/handleError');
 const {encrypt, compare} = require('../utils/handlePassword');
 const { tokenSign } = require('../utils/handlerJwt');
@@ -24,7 +24,11 @@ const createUser = async(req,res)=>{
             token: await tokenSign(dataUser),
             user: dataUser
     }
-        res.send({data});  
+        res.send({
+            status: "success",
+            message: "Usuario creado correctamente",
+            data
+        });  
           
     } catch (error) {
         console.log(error);
@@ -44,6 +48,8 @@ const createUser = async(req,res)=>{
 const getUsers = async(req,res)=>{
     try {
         const users = await userModel.find();
+        const userT = req.user.username;
+        console.log(userT);
         if (users.length === 0) {
             return handleHttpError(res, "NO_HAY_USUARIOS", 404);
         }

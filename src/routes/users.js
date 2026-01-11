@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const controllerUser = require('../controllers/users')
+const authMiddleware = require('../middleware/auth')
+const roleMiddleware = require('../middleware/role');
 const {validateCreateUser, validateGetUser,validateLoginUser} = require('../validators/users');
 
 /**
@@ -25,7 +27,7 @@ router.post("/login", validateLoginUser, controllerUser.loginUser) //Agregar val
  * GET /api/user
  * returns lista de usuarios
  */
-router.get("/", controllerUser.getUsers)
+router.get("/", authMiddleware,roleMiddleware(["user"]), controllerUser.getUsers)
 
 
 /**
@@ -33,7 +35,7 @@ router.get("/", controllerUser.getUsers)
  * GET /api/user/:id
  * returns un usuario
  */
-router.get("/:id",validateGetUser,controllerUser.getUser)
+router.get("/:id",authMiddleware,validateGetUser,controllerUser.getUser)
 
 /**
  * Rutas para la gestión de usuarios
@@ -41,7 +43,7 @@ router.get("/:id",validateGetUser,controllerUser.getUser)
  * body: {userData}
  * returns usuario actualizado
  */
-router.put("/:id",validateGetUser,validateCreateUser,controllerUser.updateUser)
+router.put("/:id",authMiddleware,validateGetUser,validateCreateUser,controllerUser.updateUser)
 
 /**
  * Rutas para la gestión de usuarios
@@ -49,7 +51,7 @@ router.put("/:id",validateGetUser,validateCreateUser,controllerUser.updateUser)
  * body: {ids: []}
  * returns usuarios eliminados
  */
-router.delete("/:id",controllerUser.deleteUser)
+router.delete("/:id", authMiddleware,roleMiddleware(["admin"]), controllerUser.deleteUser)
 
 
 module.exports = router
