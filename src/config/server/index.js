@@ -14,6 +14,9 @@ const loggerStream = require('../../utils/handleLogger');
  * @return {Object} - Middlewares de la aplicación
  *  
  */
+
+
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors());
@@ -42,7 +45,7 @@ app.use('/api', allRoutes)
  * 
  */
 
-const server = async() => {
+const server = async() => { 
 
     try {
         await app.listen(port, () => 

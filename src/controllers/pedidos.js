@@ -42,11 +42,13 @@ const createPedido = async(req,res)=>{
  */
 
 const getPedidos = async(req,res)=>{
+    
     try {
         const pedidos = await pedidoModel.find();
         if (pedidos.length === 0) {
             return handleHttpError(res, "NO_HAY_PEDIDOS", 404);
         }
+        
         return res.status(200).json({
             status: "success",
             pedidos
@@ -66,7 +68,6 @@ const getPedidos = async(req,res)=>{
  */
 const getPedido = async(req,res)=>{
     try {
-        req=matchedData(req);
         const {id}=req;
     
         const pedido = await pedidoModel.findById(id);

@@ -4,6 +4,7 @@ const controllerUser = require('../controllers/users')
 const authMiddleware = require('../middleware/auth')
 const roleMiddleware = require('../middleware/role');
 const {validateCreateUser, validateGetUser,validateLoginUser} = require('../validators/users');
+const cacheInit = require ('../middleware/cache')
 
 /**
  * Rutas para la gestión de usuarios
@@ -27,7 +28,7 @@ router.post("/login", validateLoginUser, controllerUser.loginUser) //Agregar val
  * GET /api/user
  * returns lista de usuarios
  */
-router.get("/", authMiddleware,roleMiddleware(["user","admin"]), controllerUser.getUsers)
+router.get("/",cacheInit,authMiddleware,roleMiddleware(["user","admin"]), controllerUser.getUsers)
 
 
 /**
@@ -35,7 +36,7 @@ router.get("/", authMiddleware,roleMiddleware(["user","admin"]), controllerUser.
  * GET /api/user/:id
  * returns un usuario
  */
-router.get("/:id",authMiddleware,roleMiddleware(["user"]),controllerUser.getUser)
+router.get("/:id",cacheInit,authMiddleware,roleMiddleware(["user","admin"]),controllerUser.getUser)
 
 /**
  * Rutas para la gestión de usuarios

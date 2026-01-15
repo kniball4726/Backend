@@ -4,6 +4,7 @@ const router = express.Router();
 const {validateCreatePedido, validateGetPedido }= require('../validators/pedidos');
 const authMiddleware = require('../middleware/auth')
 const roleMiddleware = require('../middleware/role');
+const cacheInit = require('../middleware/cache')
 
 /**
  * Rutas para la gestión de pedidos
@@ -19,14 +20,14 @@ router.post("/", authMiddleware,validateCreatePedido,controllerPedido.createPedi
   * returns lista de pedidos
   * 
   */
-router.get("/", authMiddleware,roleMiddleware(["admin"]),controllerPedido.getPedidos)
+router.get("/", cacheInit,authMiddleware,roleMiddleware(["admin"]),controllerPedido.getPedidos)
 
 /**
  * Rutas para la gestión de pedidos
  * GET /api/pedido/:id
  * returns un pedido
  */
-router.get("/:id",authMiddleware,validateGetPedido,controllerPedido.getPedido)
+router.get("/:id",cacheInit,authMiddleware,validateGetPedido,controllerPedido.getPedido)
 
 /**
  * Rutas para la gestión de pedidos
