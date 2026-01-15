@@ -69,8 +69,7 @@ const getUsers = async(req,res)=>{
  * @param {*} res 
  */
 const getUser = async(req,res)=>{
-    req=matchedData(req);
-    const {id}=req;
+    const {id}= req.params;
     try {
         const user = await userModel.findById(id);
         if (!user) {

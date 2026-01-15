@@ -68,8 +68,7 @@ const getPedidos = async(req,res)=>{
  */
 const getPedido = async(req,res)=>{
     try {
-        const {id}=req;
-    
+        const {id}=req.params;
         const pedido = await pedidoModel.findById(id);
         if (!pedido) {
             return handleHttpError(res, "PEDIDO_NO_ENCONTRADO", 404);
